@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en"
+      th:replace="~{base :: parent(~{::#content}, ~{::title}, ~{::script})}">
+<head>
+    <title>Add New Contact | SCM</title>
+
+    <style>
+        /* Orange file upload button */
+        #contact_image::file-selector-button {
+            background-color: #f97316;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-right: 12px;
+            font-weight: 500;
+        }
+
+        #contact_image::file-selector-button:hover {
+            background-color: #ea580c;
+        }
+
+        /* Chrome & Safari */
+        #contact_image::-webkit-file-upload-button {
+            background-color: #f97316;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-right: 12px;
+            font-weight: 500;
+        }
+
+        #contact_image::-webkit-file-upload-button:hover {
+            background-color: #ea580c;
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="content">
+
+    <div class="w-full flex justify-center py-8">
+
+        <div class="w-full max-w-4xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl p-8 transition-colors duration-200">
+
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
+                    Add New Contact
+                </h1>
+
+                <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                    This contact will be stored securely in your cloud contact manager.
+                </p>
+            </div>
+
+            <div th:if="${param.success}" class="p-4 mb-5 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-700 dark:text-green-400" role="alert">
+                <span class="font-medium">Success!</span> Contact has been added successfully.
+            </div>
+
+            <form th:action="@{'/user/contacts/add'}"
+                  th:object="${contactForm}"
+                  method="POST"
+                  enctype="multipart/form-data"
+                  class="space-y-5">
+
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Contact Name
+                    </label>
+
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                            <i class="fa-solid fa-user"></i>
+                        </span>
+
+                        <input type="text"
+                               th:field="*{name}"
+                               placeholder="Enter contact name"
+                               class="w-full pl-10 p-2.5 text-sm rounded-lg bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <p th:if="${#fields.hasErrors('name')}" 
+                       th:errors="*{name}" 
+                       class="text-red-500 text-xs mt-1.5 font-medium"></p>
+                </div>
+
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Contact Email
+                    </label>
+
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                            <i class="fa-solid fa-envelope"></i>
+                        </span>
+
+                        <input type="text"
+                               th:field="*{email}"
+                               placeholder="example@gmail.com"
+                               class="w-full pl-10 p-2.5 text-sm rounded-lg bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <p th:if="${#fields.hasErrors('email')}" 
+                       th:errors="*{email}" 
+                       class="text-red-500 text-xs mt-1.5 font-medium"></p>
+                </div>
+
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Contact Phone
+                    </label>
+
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                            <i class="fa-solid fa-phone"></i>
+                        </span>
+
+                        <input type="text"
+                               th:field="*{phoneNumber}"
+                               placeholder="9876543210"
+                               class="w-full pl-10 p-2.5 text-sm rounded-lg bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <p th:if="${#fields.hasErrors('phoneNumber')}" 
+                       th:errors="*{phoneNumber}" 
+                       class="text-red-500 text-xs mt-1.5 font-medium"></p>
+                </div>
+
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Contact Address
+                    </label>
+
+                    <textarea th:field="*{address}"
+                              rows="4"
+                              placeholder="Address of the contact"
+                              class="w-full p-2.5 text-sm rounded-lg bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                    
+                    <p th:if="${#fields.hasErrors('address')}" 
+                       th:errors="*{address}" 
+                       class="text-red-500 text-xs mt-1.5 font-medium"></p>
+                </div>
+
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Contact Description
+                    </label>
+
+                    <textarea th:field="*{description}"
+                              rows="4"
+                              placeholder="Write about your contact"
+                              class="w-full p-2.5 text-sm rounded-lg bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-4">
+
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                            <i class="fa-solid fa-globe"></i>
+                        </span>
+
+                        <input type="url"
+                               th:field="*{websiteLink}"
+                               placeholder="http://yourwebsite.com"
+                               class="w-full pl-10 p-2.5 text-sm rounded-lg bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-400">
+                    </div>
+
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                            <i class="fa-brands fa-linkedin"></i>
+                        </span>
+
+                        <input type="url"
+                               th:field="*{linkedinLink}"
+                               placeholder="https://linkedin.com/in/username"
+                               class="w-full pl-10 p-2.5 text-sm rounded-lg bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-400">
+                    </div>
+
+                </div>
+
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="contact_image">
+                        Contact Image
+                    </label>
+
+                    <input id="contact_image"
+                           type="file"
+                           th:field="*{contactImage}"
+                           class="block w-full text-sm text-gray-500 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700">
+                </div>
+
+                <div class="flex items-center">
+                    <input id="favorite"
+                           type="checkbox"
+                           th:field="*{favorite}"
+                           class="w-4 h-4 text-blue-600 rounded border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700">
+
+                    <label for="favorite"
+                           class="ml-2 text-sm text-gray-600 dark:text-gray-300">
+                        Is this contact your favorite one?
+                    </label>
+                </div>
+
+                <div class="flex gap-3 pt-4">
+
+                    <button type="submit"
+                            class="px-5 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300">
+                        <i class="fa-solid fa-plus mr-2"></i>
+                        Save Contact
+                    </button>
+
+                    <button type="reset"
+                            class="px-5 py-2.5 text-sm font-medium text-gray-500 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-900 dark:hover:text-white">
+                        <i class="fa-solid fa-trash mr-2"></i>
+                        Clear Form
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    console.log("Add Contact page loaded.");
+</script>
+
+</body>
+</html>

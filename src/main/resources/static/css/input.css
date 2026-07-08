@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+/* Tells Tailwind v4 exactly where your Thymeleaf HTML files live */
+@source "../templates/**/*.html";
+@source "../../../templates/**/*.html";
+
+/* Tells Tailwind v4 to look for class="dark" instead of your system OS settings */
+@custom-variant dark (&:where(.dark, .dark *));

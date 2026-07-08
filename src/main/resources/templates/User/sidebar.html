@@ -1,0 +1,51 @@
+<aside id="logo-sidebar" 
+       th:fragment="sidebar" 
+       class="fixed top-0 left-0 z-40 w-64 h-screen pt-24 transition-transform -translate-x-full bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700" 
+       aria-label="Sidebar">
+    
+    <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
+        <ul class="space-y-2 font-medium">
+            <li>
+                <a th:href="@{/user/dashboard}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <i class="fa-solid fa-chart-pie w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white flex items-center justify-center"></i>
+                    <span class="ms-3">Dashboard</span>
+                </a>
+            </li>
+            
+            <li>
+                <a th:href="@{/user/profile}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <i class="fa-solid fa-user w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white flex items-center justify-center"></i>
+                    <span class="ms-3">Profile</span>
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/user/contacts/add}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <i class="fa-solid fa-user-plus w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white flex items-center justify-center"></i>
+                    <span class="ms-3">Add Contact</span>
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/user/contacts}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <i class="fa-solid fa-address-book w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white flex items-center justify-center"></i>
+                    <span class="ms-3">Contacts</span>
+                </a>
+            </li>
+            
+            <li>
+                <a th:href="@{/user/settings}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <i class="fa-solid fa-gear w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white flex items-center justify-center"></i>
+                    <span class="ms-3">Settings</span>
+                </a>
+            </li>
+            
+            <li>
+                <a th:href="@{/logout}" class="flex items-center p-2 text-red-600 rounded-lg hover:bg-red-50 dark:hover:bg-red-950/30 group">
+                    <i class="fa-solid fa-right-from-bracket w-5 h-5 text-red-500 transition duration-75 group-hover:text-red-700 flex items-center justify-center"></i>
+                    <span class="ms-3 font-semibold">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</aside>

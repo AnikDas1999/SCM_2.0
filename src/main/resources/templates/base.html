@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="parent(content,title,script)">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title data-th-replace="${title}">SCM</title>
+    
+    <script>
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous"
+        referpolicy="no-referrer" />
+    <link rel="stylesheet" data-th-href="@{'/css/output.css'}"/>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 min-h-screen overflow-y-auto">
+    
+    <div th:if="${loggedInUser}">
+        <div data-th-replace="~{user/user_navbar :: user-navbar}"></div>
+    </div>
+    <div th:unless="${loggedInUser}">
+        <div data-th-replace="~{navbar :: navbar}"></div>
+    </div>
+    
+    <div th:if="${loggedInUser}">
+        <div data-th-replace="~{user/sidebar :: sidebar}"></div>
+    </div>
+    
+    <div id="main-content" 
+         class="pt-24 min-h-screen transition-all duration-300 ease-in-out px-4 sm:px-6 lg:px-8">
+        <div class="p-4 text-gray-900 dark:text-white max-w-7xl w-full mx-auto">
+            <section data-th-replace="${content}"></section>
+        </div>
+    </div>
+        
+    <div th:unless="${loggedInUser}" class="p-6 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
+        <span class="text-sm text-gray-500 dark:text-gray-400">
+            Base Page Contents!!! :)
+        </span>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
+    <script data-th-src="@{'/js/script.js'}"></script>
+    <th:block data-th-replace="${script}"></th:block>
+</body>
+</html>

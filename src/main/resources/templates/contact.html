@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: parent(~{::#content}, ~{::title}, ~{::script})}">
+<head> 
+    <title data-th-text="${loggedInUser.name} + ' | View Contacts'">All Contacts</title> 
+</head>
+<body>
+
+    <div id="content">
+        
+        <div class="mb-6">
+            <h1 class="text-2xl md:text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">All Your Contacts</h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">List of all contacts...</p>
+        </div>
+        
+        <div class="bg-white dark:bg-gray-800 shadow-sm rounded-xl border border-gray-100 dark:border-gray-700 overflow-hidden">
+            
+            <div class="flex flex-col sm:flex-row items-center justify-between p-4 bg-white dark:bg-gray-800 gap-2 border-b border-gray-100 dark:border-gray-700">
+                <div>
+                    <button class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 font-medium rounded-lg text-xs px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600" type="button">
+                        Action 
+                        <svg class="w-2 h-2 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="relative w-full sm:w-auto">
+                    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                        </svg>
+                    </div>
+                    <input type="text" id="table-search-users" class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-full sm:w-60 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="Search for users">
+                </div>
+            </div>
+            
+            <div class="relative overflow-x-auto">
+                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs uppercase tracking-wider text-gray-400 dark:text-gray-400 bg-gray-50 dark:bg-gray-700/50 border-b border-gray-100 dark:border-gray-700">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 font-bold">Name</th>
+                            <th scope="col" class="px-6 py-3 font-bold">Phone</th>
+                            <th scope="col" class="px-6 py-3 font-bold">Links</th>
+                            <th scope="col" class="px-6 py-3 font-bold text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100 dark:divide-gray-700/60">
+                        <tr th:each="c : ${contacts.content}" class="bg-white dark:bg-gray-800 hover:bg-gray-50/50 dark:hover:bg-gray-700/30 transition-colors">
+                            <td scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                                <img class="w-10 h-10 rounded-full object-cover shrink-0" 
+                                     th:src="${c.picture != null} ? ${c.picture} : '/images/default-avatar.png'" 
+                                     alt="Avatar image">
+                                <div class="ps-3 flex flex-col justify-center">
+                                    <div class="text-sm font-bold text-gray-800 dark:text-gray-200" th:text="${c.name}">Name</div>
+                                    <div class="text-xs text-gray-400 dark:text-gray-500 font-normal" th:text="${c.email}">email@example.com</div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-gray-500 dark:text-gray-400 font-medium whitespace-nowrap">
+                                <div class="flex items-center gap-1.5">
+                                    <svg class="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                                    </svg>
+                                    <span th:text="${c.phoneNumber}">9839466732</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center gap-2.5">
+                                    <span th:if="${c.favorite}" class="h-2.5 w-2.5 block rounded-full bg-green-500" title="Favorite"></span>
+                                    <a th:if="${c.websiteLink != null && !#strings.isEmpty(c.websiteLink)}" th:href="${c.websiteLink}" target="_blank" class="text-gray-400 hover:text-gray-600 dark:hover:text-white">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 00-5.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+                                    </a>
+                                    <a th:if="${c.linkedInLink != null && !#strings.isEmpty(c.linkedInLink)}" th:href="${c.linkedInLink}" target="_blank" class="text-gray-400 hover:text-blue-600">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                                    </a>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center">
+                                <div class="inline-flex items-center gap-3">
+                                    <a href="#" class="text-gray-400 hover:text-red-600" title="Delete"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></a>
+                                    <a href="#" class="text-gray-400 hover:text-blue-600" title="Edit"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg></a>
+                                    <a href="#" class="text-gray-400 hover:text-gray-700 dark:hover:text-white" title="View"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg></a>
+                                </div>
+                            </td>
+                        </tr>
+                        
+                        <tr th:if="${contacts == null || contacts.empty}">
+                            <td colspan="4" class="px-6 py-10 text-center text-gray-400 font-medium bg-white dark:bg-gray-800">
+                                No contacts found.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div th:if="${contacts != null && contacts.totalPages > 0}" class="p-4 bg-white dark:bg-gray-800 border-t border-gray-100 dark:border-gray-700 flex justify-center">
+                <nav aria-label="Page navigation">
+                    <ul class="inline-flex -space-x-px text-sm rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 divide-x divide-gray-200 dark:divide-gray-700 shadow-sm">
+                        
+                        <li>
+                            <a th:href="@{/user/contacts(page=${currentPage - 1}, size=${pageSize})}"
+                               th:classappend="${contacts.first} ? 'pointer-events-none opacity-40 bg-gray-50 dark:bg-gray-800/50 text-gray-400' : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'"
+                               class="flex items-center justify-center font-semibold px-4 h-10 transition-colors">
+                                 Previous
+                             </a>
+                        </li>
+                        
+                        <li th:each="index : ${#numbers.sequence(0, contacts.totalPages - 1)}">
+                            <a th:href="@{/user/contacts(page=${index}, size=${pageSize})}"
+                               th:text="${index + 1}"
+                               th:classappend="${index == currentPage} ? 'bg-blue-500 text-white font-bold border-blue-500 dark:bg-blue-600' : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'"
+                               class="flex items-center justify-center font-medium w-10 h-10 transition-colors">
+                                1
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a th:href="@{/user/contacts(page=${currentPage + 1}, size=${pageSize})}"
+                               th:classappend="${contacts.last} ? 'pointer-events-none opacity-40 bg-gray-50 dark:bg-gray-800/50 text-gray-400' : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'"
+                               class="flex items-center justify-center font-semibold px-4 h-10 transition-colors">
+                                 Next
+                            </a>
+                        </li>
+                        
+                    </ul>
+                </nav>
+            </div>
+            
+        </div>
+    </div>
+</body>
+</html>
