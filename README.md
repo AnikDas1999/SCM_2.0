@@ -112,7 +112,7 @@ src/main/java/com/scm20
 ## 1. Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_GITHUB_USERNAME/scm20.git
+git clone https://github.com/AnikDas1999/scm20.git
 cd scm20
 ```
 
@@ -205,6 +205,3 @@ http://localhost:8080
 
 GitHub: **https://github.com/AnikDas1999**
 
----
-
-## ⭐ If you like this project, consider giving it a star on GitHub!
